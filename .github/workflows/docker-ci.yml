@@ -36,6 +36,6 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest
 
     - name: Push frontend image
-      run:
+      run: |
         docker tag lyrica-frontend ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
         docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
