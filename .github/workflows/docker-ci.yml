@@ -32,10 +32,10 @@ jobs:
 
     - name: Push backend image
       run:
-        docker tag lyrica-backend ${{ secrets.DOCKER.DOCKER_USERNAME }}/lyrica-backend:latest
-        docker push ${{ secrets.DOCKER.DOCKER_USERNAME }}/lyrica-backend:latest
+        docker tag lyrica-backend ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest
 
     - name: Push frontend image
       run:
-        docker tag lyrica-frontend ${{ secrets.DOCKER.DOCKER_USERNAME }}/lyrica-frontend:latest
-        docker push ${{ secrets.DOCKER.DOCKER_USERNAME }}/lyrica-frontend:latest
+        docker tag lyrica-frontend ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
