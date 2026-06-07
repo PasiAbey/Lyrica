@@ -1,14 +1,14 @@
 services:
 
   frontend:
-    image: pasiabey/lyrica-frontend:latest
+    build: ./frontend
     ports:
       - "80:80"
     depends_on:
       - backend
-  
+
   backend:
-    image: pasiabey/lyrica-backend:latest
+    build: ./backend
     ports:
       - "3000:3000"
     volumes:
