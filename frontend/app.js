@@ -516,7 +516,7 @@ async function fetchLyrics(song) {
     if (song.artworkUrl) params.set('artworkUrl', song.artworkUrl);
     if (song.previewUrl) params.set('previewUrl', song.previewUrl);
 
-    const res = await fetch(`/api/songs/lyrics?${params.toString()}`);
+    const res = await fetch(`${window.API_BASE || ''}/api/songs/lyrics?${params.toString()}`);
     if (!res.ok) throw new Error("Backend API error");
 
     const data = await res.json();
@@ -604,7 +604,7 @@ async function saveLyricsToBackend(title, artist, lyrics) {
     const artworkUrl = params.get('artwork') || '';
     const previewUrl = params.get('preview') || '';
 
-    const res = await fetch(`/api/songs/lyrics`, {
+    const res = await fetch(`${window.API_BASE || ''}/api/songs/lyrics`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
