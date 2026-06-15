@@ -7,6 +7,8 @@ resource "aws_instance" "this" {
 
   key_name = var.key_name
 
+  user_data = file("${path.module}/user_data.sh")
+
   tags = {
     Name        = var.name
     Environment = var.environment
