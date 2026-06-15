@@ -9,6 +9,8 @@ resource "aws_instance" "this" {
 
   user_data = file("${path.module}/user_data.sh")
 
+  iam_instance_profile = var.iam_instance_profile
+
   tags = {
     Name        = var.name
     Environment = var.environment
