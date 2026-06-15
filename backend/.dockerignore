@@ -1,0 +1,9 @@
+# Exclude heavy dependencies — npm install runs inside the container
+node_modules/
+
+# Exclude local environment secrets — use Docker env vars or secrets in production
+.env
+
+# Exclude logs
+*.log
+npm-debug.log*

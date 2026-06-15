@@ -1,0 +1,3 @@
+# Exclude local dev config — not needed in the Docker image
+# Docker/Production uses Nginx proxy, so no API_BASE is needed
+config.js

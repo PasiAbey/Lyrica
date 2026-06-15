@@ -1,0 +1,21 @@
+# Environment config — each developer creates their own from config.example.js
+frontend/config.js
+
+# Dependencies
+/node_modules
+/backend/node_modules
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
