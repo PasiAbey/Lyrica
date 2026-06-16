@@ -56,8 +56,9 @@ jobs:
     - name: Deploy to AWS EC2
       run: |
         aws ssm send-command \
+          
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
           --document-name "AWS-RunShellScript" \
-          --targets "Key=instanceIds,Values=${{ secrets.EC2_INSTANCE_ID }}" \
           --parameters 'commands= "[
             \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest\",
             \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest\",
