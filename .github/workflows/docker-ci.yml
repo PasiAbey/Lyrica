@@ -59,8 +59,8 @@ jobs:
           --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
           --document-name "AWS-RunShellScript" \
           --parameters commands= "[
-            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest\",
-            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest\",
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest || true\",
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest || true\",
             \"sudo docker network create lyrica-network || true\",
             \"sudo docker stop frontend || true\",
             \"sudo docker rm frontend || true\",
