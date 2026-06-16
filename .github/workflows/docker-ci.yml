@@ -44,10 +44,29 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
 
     
-    #Login to AWS
+    # Login to AWS
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
+
+    # Deploy to AWS using using SSH
+    - name: Deploy to AWS EC2
+      run: |
+        aws ssm send-command \
+          --document-name "AWS-RunShellScript" \
+          --targets "Key=instanceIds,Values=${{ secrets.EC2_INSTANCE_ID }}" \
+          --parameters 'commands= "[
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest\",
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest\",
+            \"sudo docker network create lyrica-network || true\",
+            \"sudo docker stop frontend || true\",
+            \"sudo docker rm frontend || true\",
+            \"sudo docker stop backend || true\",
+            \"sudo docker rm backend || true\",
+            \"sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest\",
+            \"sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest\"
+          ] "\
+          --region ${{ secrets.AWS_REGION }}
