@@ -34,6 +34,7 @@ module "Lyrica-web" {
   instance_type = "t3.micro"
 
   key_name      = var.key_pair
+  iam_instance_profile = var.iam_instance_profile
 
   subnet_id = module.Lyrica-vpc.subnet_id
   security_groups_id = [module.Lyrica-security-group.security_group_id]
