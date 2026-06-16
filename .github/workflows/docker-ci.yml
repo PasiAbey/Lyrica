@@ -58,7 +58,7 @@ jobs:
         aws ssm send-command \
           --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
           --document-name "AWS-RunShellScript" \
-          --parameters commands= "[
+          --parameters 'commands= [
             \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest || true\",
             \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest || true\",
             \"sudo docker network create lyrica-network || true\",
@@ -68,5 +68,5 @@ jobs:
             \"sudo docker rm backend || true\",
             \"sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest\",
             \"sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest\"
-          ]" \
+          ]' \
           --region ${{ secrets.AWS_REGION }}
