@@ -134,14 +134,14 @@ jobs:
           --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
           --document-name "AWS-RunShellScript" \
           --parameters "commands: [
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION",
-              "sudo docker stop frontend || true",
-              "sudo docker rm frontend || true",
-              "sudo docker stop backend || true",
-              "sudo docker rm backend || true",
-              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
-              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION"
+              \"sudo docker pull ***/lyrica-backend:$PREVIOUS_VERSION\",
+              \"sudo docker pull ***/lyrica-frontend:$PREVIOUS_VERSION\",
+              \"sudo docker stop frontend || true\",
+              \"sudo docker rm frontend || true\",
+              \"sudo docker stop backend || true\",
+              \"sudo docker rm backend || true\",
+              \"sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ***/lyrica-backend:$PREVIOUS_VERSION\",
+              \"sudo docker run -d --name frontend --network lyrica-network -p 80:80 ***/lyrica-frontend:$PREVIOUS_VERSION\"
             ]" \
           --query "Command.CommandId" \
           --output text \
