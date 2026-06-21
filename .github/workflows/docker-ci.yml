@@ -98,7 +98,7 @@ jobs:
         sleep 10
 
         echo "Checking backend health"
-        for i in {1..10}; do
+        for i in {1..5}; do
           if curl -f https://${{ secrets.EC2_PUBLIC_IP}}; then
             echo "Backend is up and running"
             exit 0
@@ -135,14 +135,14 @@ jobs:
           --document-name "AWS-RunShellScript" \
           --parameters '{
             "commands": [
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:${PREVIOUS_VERSION}",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:${PREVIOUS_VERSION}",
               "sudo docker stop frontend || true",
               "sudo docker rm frontend || true",
               "sudo docker stop backend || true",
               "sudo docker rm backend || true",
-              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
-              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION"
+              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:${PREVIOUS_VERSION}",
+              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:${PREVIOUS_VERSION}"
             ]
           }' \
           --region ${{ secrets.AWS_REGION }}
