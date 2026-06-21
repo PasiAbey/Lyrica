@@ -28,9 +28,7 @@ jobs:
       run: docker ps
     
     - name: Add Version Tag
-      run: IMAGE_TAG=${{ github.sha }}
-
-
+      run: echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
 
     - name: login to docker hub
       uses: docker/login-action@v3
@@ -40,13 +38,13 @@ jobs:
 
     - name: Push backend image
       run: |
-        docker tag lyrica-backend ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest
+        docker tag lyrica-backend ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG
 
     - name: Push frontend image
       run: |
-        docker tag lyrica-frontend ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest
+        docker tag lyrica-frontend ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG
+        docker push ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG
 
     
     # Login to AWS
@@ -65,15 +63,15 @@ jobs:
           --document-name "AWS-RunShellScript" \
           --parameters '{
             "commands": [
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest || true",
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest || true",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG || true",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG || true",
               "sudo docker network create lyrica-network || true",
               "sudo docker stop frontend || true",
               "sudo docker rm frontend || true",
               "sudo docker stop backend || true",
               "sudo docker rm backend || true",
-              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:latest",
-              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:latest"
+              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG",
+              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG"
             ]
           }' \
           --query "Command.CommandId" \
