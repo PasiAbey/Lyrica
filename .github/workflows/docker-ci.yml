@@ -88,3 +88,20 @@ jobs:
             --region ${{ secrets.AWS_REGION }} \
             --query 'StandardOutputContent' \
             --output text
+
+    - name: Health check
+      run: |
+        echo "Waiting for the application to start"
+        sleep 10
+
+        echo "Checking backend health"
+        for i in {1..10}; do
+          if curl -f http://${{ secrets.EC2_PUBLIC_IP}}; then
+            echo "Backend is up and running"
+            exit 0
+          fi
+            echo "attempt $i, retrying in 5 seconds..."
+            sleep 5
+        done
+        echo "Health check failed"
+        exit 1
