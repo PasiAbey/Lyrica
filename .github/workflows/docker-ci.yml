@@ -135,8 +135,8 @@ jobs:
           --document-name "AWS-RunShellScript" \
           --parameters '{
             "commands": [
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION || true",
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION || true",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION",
               "sudo docker stop frontend || true",
               "sudo docker rm frontend || true",
               "sudo docker stop backend || true",
