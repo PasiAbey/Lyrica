@@ -26,6 +26,9 @@ jobs:
 
     - name: check the running containers
       run: docker ps
+    
+    - name: Add Version Tag
+      run: IMAGE_TAG=${{ github.sha }}
 
 
 
