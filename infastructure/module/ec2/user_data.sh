@@ -11,6 +11,8 @@ systemctl daemon-reload
 systemctl enable docker
 systemctl start docker
 
+sudo docker network create lyrica-network #Create a network
+
 apt-get install -y snapd
 
 #install amazon ssm agent

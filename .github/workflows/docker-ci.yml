@@ -65,7 +65,6 @@ jobs:
             "commands": [
               "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG || true",
               "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG || true",
-              "sudo docker network create lyrica-network || true",
               "sudo docker stop frontend || true",
               "sudo docker rm frontend || true",
               "sudo docker stop backend || true",
