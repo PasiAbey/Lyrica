@@ -143,7 +143,7 @@ jobs:
               "sudo docker rm backend || true",
               "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION",
               "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION"
-            ]""
+            ]"
           } \
           --query "Command.CommandId" \
           --output text \
