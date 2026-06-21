@@ -78,6 +78,7 @@ jobs:
           --region ${{ secrets.AWS_REGION }})
 
           echo "Command ID: $COMMAND_ID"
+          echo "Version: ${{ github.sha }}"
 
           aws ssm wait command-executed \
             --command-id $COMMAND_ID \
@@ -98,7 +99,7 @@ jobs:
 
         echo "Checking backend health"
         for i in {1..10}; do
-          if curl -f http://${{ secrets.EC2_PUBLIC_IP}}; then
+          if curl -f http://${{ secrets.EC2_PUBLIC_IP}}/3000; then
             echo "Backend is up and running"
             exit 0
           fi
