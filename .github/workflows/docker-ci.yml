@@ -146,6 +146,8 @@ jobs:
             ]
           }' \
           --region ${{ secrets.AWS_REGION }})
+          --query "Command.CommandId"
+          --output text
 
         aws ssm wait command-executed \
             --command-id $RB_COMMAND_ID \
