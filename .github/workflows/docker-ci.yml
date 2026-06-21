@@ -63,14 +63,14 @@ jobs:
           --document-name "AWS-RunShellScript" \
           --parameters '{
             "commands": [
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG || true",
-              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG || true",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:${IMAGE_TAG} || true",
+              "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:${IMAGE_TAG} || true",
               "sudo docker stop frontend || true",
               "sudo docker rm frontend || true",
               "sudo docker stop backend || true",
               "sudo docker rm backend || true",
-              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$IMAGE_TAG",
-              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$IMAGE_TAG"
+              "sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:${IMAGE_TAG}",
+              "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:${IMAGE_TAG}"
             ]
           }' \
           --query "Command.CommandId" \
