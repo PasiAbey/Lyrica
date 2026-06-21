@@ -129,3 +129,18 @@ jobs:
           --region ${{ secrets.AWS_REGION }})
         
         echo "Rolling back to previous version: $PREVIOUS_VERSION"
+
+        aws ssm send-command \
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+          --document-name "AWS-RunShellScript" \
+          --parameters "commands=[
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION\",
+            \"sudo docker pull ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION\",
+            \"sudo docker stop backend || true\",
+            \"sudo docker rm backend || true\",
+            \"sudo docker stop frontend || true\",
+            \"sudo docker rm frontend || true\",
+            \"sudo docker run -d --name backend --network lyrica-network -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/lyrica-backend:$PREVIOUS_VERSION\",
+            \"sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:$PREVIOUS_VERSION\"
+          ]" \
+          --region ${{ secrets.AWS_REGION }}
