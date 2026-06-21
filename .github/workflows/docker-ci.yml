@@ -145,9 +145,10 @@ jobs:
               "sudo docker run -d --name frontend --network lyrica-network -p 80:80 ${{ secrets.DOCKER_USERNAME }}/lyrica-frontend:${PREVIOUS_VERSION}"
             ]
           }' \
+          --query "Command.CommandId" \
+          --output text \
           --region ${{ secrets.AWS_REGION }})
-          --query "Command.CommandId"
-          --output text
+        
 
         aws ssm wait command-executed \
             --command-id $RB_COMMAND_ID \
